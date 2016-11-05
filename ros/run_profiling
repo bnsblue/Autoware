@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+MY_DETECTION_LAUNCH_FILE="$HOME/.autoware/my_launch/my_detection.launch"
+
+# Setting default values
+TRACKING_WORKLOAD="kf"
+
+while [[ $# -ge 1 ]]
+do
+    key="$1"
+    case $key in
+        --klt)
+            TRACKING_WORKLOAD="klt"
+            shift
+            ;;
+        --kf)
+            TRACKING_WORKLOAD="kf"
+            shift
+            ;;
+        *)
+            echo "Unrecognized option: $key"
+            shift
+            ;;
+    esac
+done
+
+echo "$TRACKING_WORKLOAD"
+
+sed -i "s/k[ltf]*_tracking/${TRACKING_WORKLOAD}_tracking/" $MY_DETECTION_LAUNCH_FILE
+
+./config_profiling --${TRACKING_WORKLOAD} --callgrind
+./run
+sleep 510
+kill -TERM $(ps aux | grep "valgrind.bin --tool=callgrind" | grep -v "grep" | awk '{print $2}')
+ps aux | grep "ros" | awk '{print $2}' | xargs kill 
+./config_profiling --${TRACKING_WORKLOAD} --normal

@@ -60,6 +60,11 @@
 #include <iterator>
 #include <chrono>
 
+// hsuch@umich.edu (2016-11-03 18:01:31)
+// For profiling
+#include <signal.h>
+sig_atomic_t volatile g_request_shutdown = 0;
+
 
 #define SSTR( x ) dynamic_cast< std::ostringstream & >( \
         ( std::ostringstream() << std::dec << x ) ).str()
@@ -978,17 +983,31 @@ void init_params()
 	USE_ORB				= false;
 }
 
+
+//void mySigIntHandler(int sig)
+//{
+//    std::cout << "[mySigIntHandler] Captured signal " << sig << "..." << std::endl;
+//    std::cout << "[mySigIntHandler] Now trying to handle it nicely..." << std::endl;
+//    
+//    g_request_shutdown = 1;
+//
+//}
+
+
 int kf_main(int argc, char* argv[])
 {
 	ros::init(argc, argv, "kf");
 	ros::NodeHandle n;
 	ros::NodeHandle private_nh("~");
 
+    ros::Rate r(100);
+
 	image_objects = n.advertise<cv_tracker::image_obj_tracked>("image_obj_tracked", 1);
 
 	cv::generateColors(_colors, 25);
 
 	ROS_INFO("Enter kf_track");
+
 
         /*=====*/
         //For graph
@@ -1031,7 +1050,17 @@ int kf_main(int argc, char* argv[])
 	//TimeSynchronizer<Image, dpm::ImageObjects> sync(image_sub, pos_sub, 10);
 
 	//sync.registerCallback(boost::bind(&sync_callback, _1, _2));
+    
+    // hsuch@umich.edu (2016-11-03 18:28:16)
+    // For profiling.
+    // signal(SIGINT, mySigIntHandler);
 
-	ros::spin();
+    ros::spin();
+    //
+    //while (!g_request_shutdown)
+    //{
+    //    ros::spinOnce();
+    //    r.sleep();
+    //}
 	return 0;
 }

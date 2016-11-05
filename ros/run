@@ -48,13 +48,13 @@ source ./devel/setup.bash;
 #fi
 
 # boot ros-master
-${TERMINAL} ${OPTION_CORE_GEOMETRY} ${OPTION_TITLE}="roscore" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roscore'"&
+${TERMINAL} ${OPTION_CORE_GEOMETRY} ${OPTION_TITLE}="roscore" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roscore; echo \"this is core\"; sleep 10'"&
 
 # boot runtime_manager  (GUI)
 #${TERMINAL} ${OPTION_RM_GEOMETRY} ${OPTION_TITLE}="runtime_manager" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; rosrun runtime_manager runtime_manager_dialog.py'"
 
 #play bag
-${TERMINAL} ${OPTION_RM_GEOMETRY} ${OPTION_TITLE}="bag" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; rosbag play --pause ~/.autoware/new_spec.bag'"&
+${TERMINAL} ${OPTION_RM_GEOMETRY} ${OPTION_TITLE}="bag" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; rosbag play --pause ~/.autoware/new_spec.bag; echo \"this is input\"; sleep 10'"&
 
 #wait for master
 sleep 3
@@ -63,22 +63,22 @@ sleep 3
 source ParamSetup.sh
 
 #boot map launch
-${TERMINAL} ${OPTION_MAP_GEOMETRY} ${OPTION_TITLE}="map" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_map.launch'" &
+${TERMINAL} ${OPTION_MAP_GEOMETRY} ${OPTION_TITLE}="map" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_map.launch; echo \"this is map\"; sleep 10'" &
 
 #boot localization launch
-${TERMINAL} ${OPTION_LOC_GEOMETRY} ${OPTION_TITLE}="loc" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_localization.launch'" &
+# ${TERMINAL} ${OPTION_LOC_GEOMETRY} ${OPTION_TITLE}="loc" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_localization.launch'" &
 
 #boot sensing launch
 #${TERMINAL} ${OPTION_SEN_GEOMETRY} ${OPTION_TITLE}="sen" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_sensing.launch'"&
 
 #boot detection launch
-${TERMINAL} ${OPTION_DET_GEOMETRY} ${OPTION_TITLE}="det" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_detection.launch'"&
+${TERMINAL} ${OPTION_DET_GEOMETRY} ${OPTION_TITLE}="det" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_detection.launch; echo \"this is det\"; sleep 10'"&
 
 #boot mission planning launch
-${TERMINAL} ${OPTION_MIPL_GEOMETRY} ${OPTION_TITLE}="mipl" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_mission_planning.launch'"&
+# ${TERMINAL} ${OPTION_MIPL_GEOMETRY} ${OPTION_TITLE}="mipl" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_mission_planning.launch'"&
 
 #boot motion planning launch
-${TERMINAL} ${OPTION_MOPL_GEOMETRY} ${OPTION_TITLE}="mopl" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_motion_planning.launch'"&
+# ${TERMINAL} ${OPTION_MOPL_GEOMETRY} ${OPTION_TITLE}="mopl" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; roslaunch ~/.autoware/my_launch/my_motion_planning.launch'"&
 
 #boot raw image terminal
 #${TERMINAL} ${OPTION_IMG_GEOMETRY} ${OPTION_TITLE}="img" --${OPTION_WORKING_DIR}=${MY_PATH} ${OPTION_COMMAND}="bash -c 'source ./devel/setup.bash; rosrun image_view image_view image:=/image_raw '" &

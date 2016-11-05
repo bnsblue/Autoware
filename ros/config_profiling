@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+LAUNCH_FILE_PATH="/home/hsuch/workspace/projects/autonomous-car/Autoware/ros/src/computing/perception/detection/packages/cv_tracker/launch"
+
+KLT_TRACK_LAUNCH_FILE_BASE="klt_tracking"
+KF_TRACK_LAUNCH_FILE_BASE="kf_tracking"
+CALLGRIND_SUFFIX="callgrind"
+NORMAL_SUFFIX="normal"
+FILE_EXT="launch"
+
+# Setting default values
+LINK_SOURCE_LAUNCH_FILE_BASE="$KF_TRACK_LAUNCH_FILE_BASE"
+LINK_SOURCE_SUFFIX="$NORMAL_SUFFIX"
+
+while [[ $# -ge 1 ]]
+do
+    key="$1"
+    case $key in
+        --callgrind)
+            LINK_SOURCE_SUFFIX="$CALLGRIND_SUFFIX"
+            shift
+            ;;
+        --normal)
+            LINK_SOURCE_SUFFIX="$NORMAL_SUFFIX"
+            shift
+            ;;
+        --klt)
+            LINK_SOURCE_LAUNCH_FILE_BASE="$KLT_TRACK_LAUNCH_FILE_BASE"
+            shift
+            ;;
+        --kf)
+            LINK_SOURCE_LAUNCH_FILE_BASE="$KF_TRACK_LAUNCH_FILE_BASE"
+            shift
+            ;;
+        *)
+            echo "Unrecognized option: $key"
+            shift
+            ;;
+    esac
+done
+
+#echo "LINK_SOURCE_LAUNCH_FILE_BASE=$LINK_SOURCE_LAUNCH_FILE_BASE"
+#echo "LINK_SOURCE_SUFFIX=$LINK_SOURCE_SUFFIX"
+LINK_SOURCE="$LINK_SOURCE_LAUNCH_FILE_BASE.$LINK_SOURCE_SUFFIX.$FILE_EXT"
+LINK_TARGET="$LINK_SOURCE_LAUNCH_FILE_BASE.$FILE_EXT"
+#echo "LINK_SOURCE=$LINK_SOURCE"
+echo "Linking: $LINK_TARGET <---- $LINK_SOURCE"
+#echo "ln -fs $LAUNCH_FILE_PATH/$LINK_SOURCE $LAUNCH_FILE_PATH/$LINK_TARGET"
+ln -fs "$LAUNCH_FILE_PATH/$LINK_SOURCE" "$LAUNCH_FILE_PATH/$LINK_TARGET"

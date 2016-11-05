@@ -35,7 +35,7 @@
   </include>
 
   <!-- XXX_track -->
-  <include file="$(find cv_tracker)/launch/kf_tracking.launch">
+  <include file="$(find cv_tracker)/launch/klt_tracking.launch">
     <arg name="car" value="$(arg car_detection)" />
     <arg name="pedestrian" value="$(arg pedestrian_detection)" />
   </include>

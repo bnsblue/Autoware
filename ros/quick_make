@@ -12,4 +12,4 @@ set -e
 #catkin_make clean
 source devel/setup.bash
 
-catkin_make -DCMAKE_BUILD_TYPE=Release $@
+catkin_make -DCMAKE_BUILD_TYPE=Relwithdebinfo $@
