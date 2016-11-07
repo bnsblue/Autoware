@@ -289,11 +289,16 @@ bool crossCorr(cv::Mat im1, cv::Mat im2)
   cv::gpu::GpuMat rst;
 
 	/// Do the Matching and Normalize
-//  cv::gpu::matchTemplate(larger_im, smaller_im, result, CV_TM_CCORR_NORMED);
+  
+  //CPU
+//  cv::matchTemplate(larger_im, smaller_im, result, CV_TM_CCORR_NORMED);
+//  GPU
   cv::gpu::matchTemplate(larger_img_gpu, smaller_img_gpu, rst, CV_TM_CCORR_NORMED);
 	//normalize(result, result, 0, 1, NORM_MINMAX, -1, cv::Mat());
 
+  //GPU
   rst.download(result);
+
 	/// Localizing the best match with minMaxLoc
 	double minVal; double maxVal; cv::Point minLoc; cv::Point maxLoc;
 	cv::Point matchLoc;

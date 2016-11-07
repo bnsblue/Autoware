@@ -206,6 +206,7 @@ ADD_DEPENDENCIES(lktracker
 
 TARGET_LINK_LIBRARIES(klt_track
   lktracker
+  opencv_gpu
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )

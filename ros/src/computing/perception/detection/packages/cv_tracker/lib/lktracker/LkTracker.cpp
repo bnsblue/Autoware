@@ -159,6 +159,8 @@ cv::Mat LkTracker::Track(cv::Mat in_image, cv::LatentSvmDetector::ObjectDetectio
       std::vector<float> err;
       if(prev_image_.empty())
         in_image.copyTo(prev_image_);
+
+      //GPU
       cv::gpu::GpuMat prev_image_gpu, gray_image_gpu, prev_points_gpu, current_points_gpu, status_gpu, *err_gpu = NULL;
       prev_image_gpu.upload(prev_image_);
       gray_image_gpu.upload(gray_image);
@@ -174,6 +176,7 @@ cv::Mat LkTracker::Track(cv::Mat in_image, cv::LatentSvmDetector::ObjectDetectio
       cv::Mat status_cpu;
       cv::Mat err_cpu;
 
+      //CPU
 //      cv::calcOpticalFlowPyrLK(prev_image_, 			//previous image frame
 //                               gray_image, 			//current image frame
 //                               prev_points_, 			//previous corner points
@@ -186,6 +189,7 @@ cv::Mat LkTracker::Track(cv::Mat in_image, cv::LatentSvmDetector::ObjectDetectio
 //                               0,
 //                               0.001);
 
+      //GPU
       cv::gpu::PyrLKOpticalFlow optical_flow = cv::gpu::PyrLKOpticalFlow();
 
       optical_flow.sparse(prev_image_gpu,
